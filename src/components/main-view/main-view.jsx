@@ -195,7 +195,13 @@ export class MainView extends React.Component {
                             if (!user) return <Col>
                                 <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                             </Col>
-                            return <MoviesList movies={movies}/>
+                            return <MoviesList 
+                                    user={user}
+                                    userData={userData}
+                                    addFavoriteToUserData={this.addFavoriteToUserData}
+                                    removeFavoriteFromUserData={this.removeFavoriteFromUserData}
+                                    movies={m}
+                                />
                         }} />
                         <Route path='/register' render={() => {
                             return <Col>
