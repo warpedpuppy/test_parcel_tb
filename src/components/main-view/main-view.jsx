@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import { setMovies } from '../../actions/actions';
+import { setMovies, setUser } from '../../actions/actions';
 
 import MoviesList from '../movies-list/movies-list';
 
@@ -40,6 +40,7 @@ export class MainView extends React.Component {
             this.setState({
                 user: user
             });
+            this.props.setUser(user);
             this.getMovies(accessToken);
             this.getUserData(user, accessToken)
         }
@@ -106,6 +107,7 @@ export class MainView extends React.Component {
             userData: authData.user
         });
 
+        this.props.setUser(authData.user.Username);
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', authData.user.Username);
         this.getMovies(authData.token);
@@ -200,7 +202,6 @@ export class MainView extends React.Component {
                                     userData={userData}
                                     addFavoriteToUserData={this.addFavoriteToUserData}
                                     removeFavoriteFromUserData={this.removeFavoriteFromUserData}
-                                    movies={m}
                                 />
                         }} />
                         <Route path='/register' render={() => {
@@ -214,7 +215,6 @@ export class MainView extends React.Component {
                             </Col>
                             return <Col md={8}>
                                     <MovieView
-                                    user={user}
                                     userData={userData}
                                     addFavoriteToUserData={this.addFavoriteToUserData}
                                     removeFavoriteFromUserData={this.removeFavoriteFromUserData} 
@@ -275,4 +275,4 @@ let mapStateToProps = state => {
     return { movies: state.movies }
 }
 
-export default connect(mapStateToProps, { setMovies } )(MainView);
+export default connect(mapStateToProps, { setMovies, setUser } )(MainView);
